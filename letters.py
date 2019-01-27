@@ -1,39 +1,22 @@
-def alphabet_position(character):
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    lower = character.lower()
-    return alphabet.index(lower)
+#Import string module to use for quickest way to get all lowercase alphabetical characters
+import string
 
-def rotate_string_13(text):
+usersentence = input("Input a sentence to see if it's a pangram: ")
 
-    rotated = ''
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
-
-    for char in text:
-        rotated_idx = (alphabet_position(char) + 13) % 26
-        if char.isupper():
-            rotated = rotated + alphabet[rotated_idx].upper()
-        else:
-            rotated = rotated + alphabet[rotated_idx]
-
-    return rotated
-
-def rotate_character(char, rot):
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    rotated_idx = (alphabet_position(char) + rot) % 26
-
-    if char.isupper():
-        return alphabet[rotated_idx].upper()
+# Function to find missing characters from sentence input by user
+def getMissingLetters(usersentence):
+    #Get all lowercase alphabetical characters 
+    characters = string.ascii_lowercase
+    #Make a set of lowercase alphabetical characters
+    charset = set(characters)
+    # Convert sentence to lowercase sorted set
+    usersentenceset = sorted(set(usersentence.lower()))
+    # Character set and sentence set are compared, characters not found in sentence set are returned
+    notchar = {x for x in charset if x not in usersentenceset}
+    if len(notchar) == 0:
+        return " "
     else:
-        return alphabet[rotated_idx]
-
-def rotate_string(text, rot):
-
-    rotated = ''
-
-    for char in text:
-        if (char.isalpha()):
-            rotated = rotated + rotate_character(char, rot)
-        else:
-            rotated = rotated + char
-
-    return rotated
+        notcharstr = ''.join(list(sorted(notchar)))
+        return notcharstr
+        
+print(getMissingLetters(usersentence))
